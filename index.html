@@ -57,8 +57,8 @@
             text-align: center;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
             border: 3px solid #FFB6C1;
-            max-width: 500px;
-            width: 90%;
+            max-width: 950px;
+            width: 95%;
             position: relative;
             overflow: hidden;
         }
@@ -87,6 +87,34 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
             position: relative;
             z-index: 2;
+        }
+
+        .main-flex {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            width: 100%;
+        }
+
+        .side-controls {
+            flex: 1 1 0;
+            min-width: 220px;
+            max-width: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            gap: 10px;
+        }
+
+        .ball-area {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
         }
 
         .timer-ball {
@@ -162,7 +190,7 @@
 
         .time-buttons {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 15px;
             margin-bottom: 20px;
             flex-wrap: wrap;
@@ -194,7 +222,7 @@
 
         .control-buttons {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 15px;
             flex-wrap: wrap;
         }
@@ -244,7 +272,7 @@
         .custom-time {
             margin: 20px 0;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             gap: 10px;
             z-index: 2;
@@ -276,59 +304,85 @@
             position: relative;
         }
 
+        @media (max-width: 1100px) {
+            .timer-ball {
+                width: 320px;
+                height: 320px;
+            }
+            .main-flex {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .main-flex {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            .side-controls {
+                align-items: center;
+                text-align: center;
+                max-width: 100%;
+            }
+            .custom-time,
+            .time-buttons,
+            .control-buttons {
+                justify-content: center;
+            }
+        }
+
         @media (max-width: 480px) {
             .container { padding: 15px; }
-            .timer-ball { width: 320px; height: 320px; }
-            .timer-face { font-size: 4em; }
-            .timer-display { font-size: 4em; }
-            h1 { font-size: 1.8em; }
+            .timer-ball { width: 220px; height: 220px; }
+            .timer-face { font-size: 2.5em; }
+            .timer-display { font-size: 2.5em; }
+            h1 { font-size: 1.3em; }
             .custom-time { flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="floating-stars" id="stars"></div>
-    
     <div class="container">
         <h1>🌟 Lepohetki-ajastin 🌟</h1>
-        
-        <div class="timer-ball">
-            <div class="ball-fill" id="ballFill"></div>
-            <div class="ball-empty" id="ballEmpty"></div>
-            <div class="timer-face" id="timerFace">😴</div>
-            <div class="timer-display" id="timeDisplay">00:00</div>
-        </div>
-
-        <div class="custom-time">
-            <label for="minutes">Minuuttia:</label>
-            <input type="number" id="minutes" min="1" max="60" value="10">
-            <label for="seconds">Sekuntia:</label>
-            <input type="number" id="seconds" min="0" max="59" value="0">
-        </div>
-
-        <div class="controls">
-            <div class="time-buttons">
-                <button class="time-btn" onclick="setTime(5, 0)">5 min</button>
-                <button class="time-btn" onclick="setTime(10, 0)">10 min</button>
-                <button class="time-btn" onclick="setTime(15, 0)">15 min</button>
-                <button class="time-btn" onclick="setTime(20, 0)">20 min</button>
-                <button class="time-btn" onclick="setTime(30, 0)">30 min</button>
+        <div class="main-flex">
+            <div class="side-controls">
+                <div class="custom-time">
+                    <label for="minutes">Minuuttia:</label>
+                    <input type="number" id="minutes" min="1" max="60" value="10">
+                    <label for="seconds">Sekuntia:</label>
+                    <input type="number" id="seconds" min="0" max="59" value="0">
+                </div>
+                <div class="controls">
+                    <div class="time-buttons">
+                        <button class="time-btn" onclick="setTime(5, 0)">5 min</button>
+                        <button class="time-btn" onclick="setTime(10, 0)">10 min</button>
+                        <button class="time-btn" onclick="setTime(15, 0)">15 min</button>
+                        <button class="time-btn" onclick="setTime(20, 0)">20 min</button>
+                        <button class="time-btn" onclick="setTime(30, 0)">30 min</button>
+                    </div>
+                    <div class="control-buttons">
+                        <button class="time-btn start-btn" id="startBtn" onclick="startTimer()">▶️ Aloita</button>
+                        <button class="time-btn stop-btn" id="stopBtn" onclick="stopTimer()">⏹️ Lopeta</button>
+                    </div>
+                </div>
+                <div class="status" id="status">Valitse aika ja aloita lepohetki! 😊</div>
+                <div class="encouragement" id="encouragement">🐑 Rentoudu ja hengittele rauhallisesti 🐑</div>
             </div>
-            
-            <div class="control-buttons">
-                <button class="time-btn start-btn" id="startBtn" onclick="startTimer()">▶️ Aloita</button>
-                <button class="time-btn stop-btn" id="stopBtn" onclick="stopTimer()">⏹️ Lopeta</button>
+            <div class="ball-area">
+                <div class="timer-ball">
+                    <div class="ball-fill" id="ballFill"></div>
+                    <div class="ball-empty" id="ballEmpty"></div>
+                    <div class="timer-face" id="timerFace">😴</div>
+                    <div class="timer-display" id="timeDisplay">00:00</div>
+                </div>
+                <div class="finished-celebration" id="celebration">
+                    🎉 Hyvin tehty! 🎉
+                </div>
             </div>
-        </div>
-
-        <div class="status" id="status">Valitse aika ja aloita lepohetki! 😊</div>
-        <div class="encouragement" id="encouragement">🐑 Rentoudu ja hengittele rauhallisesti 🐑</div>
-
-        <div class="finished-celebration" id="celebration">
-            🎉 Hyvin tehty! 🎉
         </div>
     </div>
-
     <script>
         let timerInterval;
         let totalSeconds = 0;
